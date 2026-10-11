@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quoteconv — quote export converter</title>
+<meta name="description" content="Pick quote numbers from a B2B Quotes export and get importer-ready rows, including Transactions Pro format for QuickBooks. Runs entirely in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>&#128203;</text></svg>">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="bar">
+  <div>
+    <h1>quoteconv</h1>
+    <p class="tagline">B2B Quotes export → importer rows. Nothing leaves this browser.</p>
+  </div>
+</header>
+
+<main>
+  <ol class="steps">
+    <li class="step">
+      <h2><span class="num">1</span> Upload the quote export</h2>
+      <div id="drop" class="drop">
+        <input type="file" id="file" accept=".csv,text/csv">
+        <p class="drop-hint">Drag a <code>.csv</code> here, or choose a file.</p>
+        <button type="button" id="loadSample" class="link-btn">Load local sample</button>
+      </div>
+      <p class="file-status" id="fileStatus" aria-live="polite"></p>
+    </li>
+
+    <li class="step">
+      <h2><span class="num">2</span> Which quote numbers?</h2>
+      <input type="text" id="fc" placeholder="e.g. 29, 31-33, FC54" autocomplete="off" spellcheck="false">
+      <p class="hint">Commas, spaces, or ranges. <code>FC</code> prefix optional. Output follows the order you type.</p>
+      <p class="chips" id="chips" aria-live="polite"></p>
+      <p class="warn" id="warn" aria-live="polite"></p>
+    </li>
+
+    <li class="step">
+      <h2><span class="num">3</span> Copy or download</h2>
+      <div class="actions">
+        <button type="button" id="copy" disabled>Copy for spreadsheet</button>
+        <button type="button" id="download" disabled>Download CSV</button>
+        <span class="count" id="count" aria-live="polite"></span>
+      </div>
+      <p class="hint">Copy pastes straight into spreadsheet cells (tab-separated). The download is built in your browser — no server, no upload.</p>
+    </li>
+  </ol>
+
+  <section class="output" aria-labelledby="outHead">
+    <h2 id="outHead" class="sr-only">Output</h2>
+
+    <div class="tabs" role="tablist" aria-label="Output format">
+      <button type="button" role="tab" id="tab-importer" class="tab" aria-controls="panel" aria-selected="true" data-format="importer">Importer rows</button>
+      <button type="button" role="tab" id="tab-tpro" class="tab" aria-controls="panel" aria-selected="false" data-format="tpro">Custom</button>
+    </div>
+
+    <div id="panel" role="tabpanel" aria-labelledby="tab-importer" class="panel">
+      <p class="format-note" id="formatNote"></p>
+
+      <div class="format-options" id="tproOptions" hidden>
+        <label>Shipping Method
+          <input type="text" id="shippingMethod" value="BIBO - BestWay" autocomplete="off">
+        </label>
+        <label>Payment Method
+          <input type="text" id="paymentMethod" value="Purchase Order" autocomplete="off">
+        </label>
+        <p class="hint">Static values, filled down every row. Columns B and C are left intentionally blank.</p>
+      </div>
+
+      <div class="table-wrap" id="tableWrap">
+        <p class="empty" id="empty">Output appears here once a file is loaded and quote numbers are entered.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Built for B2B Quotes by Fresh Click exports out of BigCommerce; the Transactions Pro tab targets the QuickBooks importer.
+  <a href="https://github.com/lukem570/quoteconv">Source</a></p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

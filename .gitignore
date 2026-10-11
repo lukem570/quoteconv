@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+*.log
+.vscode/
+.idea/
+
+# Real customer data — kept local, never published to Pages
+sample/
+docs/
